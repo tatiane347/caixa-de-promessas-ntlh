@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caixa de Promessas - Bíblia Sagrada NTLH</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Variáveis CSS para Manutenção Profissional */
+    :root {
+      --primary-color: #d63384; /* Rosa Principal */
+      --primary-hover-color: #b52e72; /* Rosa Hover */
+      --text-dark: #444;
+      --text-muted: #777;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400; /* Assegura boa leitura para o corpo do texto */
+      background: linear-gradient(180deg, #ffd6ec, #fff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .btn-pink {
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 30px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn-pink:hover {
+      background-color: var(--primary-hover-color);
+      transform: scale(1.05);
+      color: #fff; /* Garante que o texto fique branco ao passar o mouse */
+    }
+    /* Estilo para o botão Ver Favoritas, mais profissional */
+    #btnFavoritas {
+        border-color: var(--primary-color) !important;
+        color: var(--primary-color) !important;
+    }
+
+    .card {
+      background: #fff;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 600px;
+      width: 100%; /* Garante que ocupe o espaço dentro do container */
+      margin: 20px auto;
+    }
+
+    .versiculo {
+      font-size: 18px;
+      color: var(--text-dark);
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+
+    .favorita {
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    .favorita:hover {
+      text-decoration: underline;
+    }
+    
+    /* Estilos do Rodapé Profissional */
+    .footer {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 40px;
+      padding-top: 15px;
+      border-top: 1px solid #eee; /* Linha sutil de separação */
+      width: 100%;
+    }
+
+    .footer p {
+        margin-bottom: 5px;
+    }
+
+    .social-links a {
+      color: var(--primary-color);
+      font-size: 24px;
+      margin: 0 8px;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: var(--primary-hover-color);
+    }
+
+    /* Utilitário para a cor rosa nas favoritas */
+    .text-pink {
+        color: var(--primary-color) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📖 Caixa de Promessas</h1>
+    <p class="text-muted mb-4">Bíblia Sagrada – Versão NTLH</p>
+
+    <div id="promessaCard" class="card d-none">
+      <p id="textoPromessa" class="versiculo"></p>
+      <p id="referenciaPromessa" class="fw-bold text-secondary"></p>
+    </div>
+
+    <div class="mt-3">
+      <button id="btnNova" class="btn btn-pink me-2">Abrir uma Promessa</button>
+      <button id="btnSalvar" class="btn btn-outline-secondary me-2 d-none">Salvar Favorita</button>
+      <button id="btnFavoritas" class="btn btn-outline-dark">Ver Favoritas ❤️</button>
+    </div>
+
+    <div id="listaFavoritas" class="mt-4"></div>
+  </div>
+
+  <footer class="footer">
+    <p>Criado por ❤️Tatiane Souza❤️</p>
+    <p class="mb-2">Versão NTLH – Todos os direitos reservados.</p>
+    <div class="social-links">
+      <a href="https://facebook.com/seuperfil" target="_blank" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+      <a href="https://instagram.com/seuperfil" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://pinterest.com/seuperfil" target="_blank" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    // Seus scripts JavaScript...
+    const promessas = [
+      {texto: "O Senhor é o meu pastor; nada me faltará.", ref: "Salmo 23:1"},
+      {texto: "Deus é o nosso refúgio e a nossa força, socorro que não falta em tempos de aflição.", ref: "Salmo 46:1"},
+      {texto: "Entrega o teu caminho ao Senhor; confia nele, e o mais ele fará.", ref: "Salmo 37:5"},
+      {texto: "O amor é paciente e bondoso. O amor não é ciumento, nem orgulhoso.", ref: "1 Coríntios 13:4"},
+      {texto: "Tudo posso naquele que me fortalece.", ref: "Filipenses 4:13"},
+      {texto: "Porque eu sei os planos que tenho para vocês, diz o Senhor.", ref: "Jeremias 29:11"},
+      {texto: "Peçam, e vocês receberão; procurem, e acharão; batam, e a porta será aberta.", ref: "Mateus 7:7"},
+      {texto: "Deus é amor, e quem vive no amor vive em Deus.", ref: "1 João 4:16"},
+      {texto: "O choro pode durar uma noite, mas a alegria vem pela manhã.", ref: "Salmo 30:5"},
+      {texto: "Não fiquem preocupados com nada, mas em tudo apresentem seus pedidos a Deus em oração.", ref: "Filipenses 4:6"}
+    ];
+
+    const btnNova = document.getElementById('btnNova');
+    const btnSalvar = document.getElementById('btnSalvar');
+    const btnFavoritas = document.getElementById('btnFavoritas');
+    const promessaCard = document.getElementById('promessaCard');
+    const textoPromessa = document.getElementById('textoPromessa');
+    const referenciaPromessa = document.getElementById('referenciaPromessa');
+    const listaFavoritas = document.getElementById('listaFavoritas');
+
+    let promessaAtual = null;
+
+    btnNova.addEventListener('click', () => {
+      const sorteada = promessas[Math.floor(Math.random() * promessas.length)];
+      promessaAtual = sorteada;
+      textoPromessa.textContent = `"${sorteada.texto}"`;
+      referenciaPromessa.textContent = sorteada.ref;
+      promessaCard.classList.remove('d-none');
+      btnSalvar.classList.remove('d-none');
+      listaFavoritas.innerHTML = '';
+    });
+
+    btnSalvar.addEventListener('click', () => {
+      if (!promessaAtual) return;
+      let favoritas = JSON.parse(localStorage.getItem('favoritas')) || [];
+      // Evita duplicatas, uma boa prática
+      const jaExiste = favoritas.some(p => p.texto === promessaAtual.texto && p.ref === promessaAtual.ref);
+      if (jaExiste) {
+         alert('Esta promessa já foi salva nas suas favoritas!');
+         return;
+      }
+      
+      favoritas.push(promessaAtual);
+      localStorage.setItem('favoritas', JSON.stringify(favoritas));
+      alert('Promessa salva com sucesso ❤️');
+    });
+
+    btnFavoritas.addEventListener('click', () => {
+      promessaCard.classList.add('d-none');
+      btnSalvar.classList.add('d-none');
+      
+      const favoritas = JSON.parse(localStorage.getItem('favoritas')) || [];
+      if (favoritas.length === 0) {
+        listaFavoritas.innerHTML = '<p class="text-muted">Nenhuma promessa favorita ainda.</p>';
+        return;
+      }
+
+      let html = '<h4 class="mt-4 text-pink">❤️ Minhas Promessas Favoritas</h4>';
+      favoritas.forEach((p, i) => {
+        html += `
+          <div class="card mt-3">
+            <p class="versiculo">"${p.texto}"</p>
+            <p class="fw-bold">${p.ref}</p>
+            <span class="favorita" onclick="removerFavorita(${i})">Remover</span>
+          </div>
+        `;
+      });
+      listaFavoritas.innerHTML = html;
+    });
+
+    function removerFavorita(index) {
+      let favoritas = JSON.parse(localStorage.getItem('favoritas')) || [];
+      favoritas.splice(index, 1);
+      localStorage.setItem('favoritas', JSON.stringify(favoritas));
+      // Chama o clique para atualizar a lista
+      btnFavoritas.click(); 
+    }
+  </script>
+
+</body>
+</html>
